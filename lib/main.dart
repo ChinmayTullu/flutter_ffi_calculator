@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'rust_bridge.dart';
+import 'rust_bridge.dart'; // FFI bindings to Rust functions
 
 void main() {
-  runApp(CalculatorApp());
+  runApp(const CalculatorApp());
 }
 
+/// Root widget for the app
 class CalculatorApp extends StatelessWidget {
   const CalculatorApp({super.key});
 
@@ -12,26 +13,31 @@ class CalculatorApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Rust FFI Calculator',
-      home: CalculatorScreen(),
+      home: const CalculatorScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
+/// Public StatefulWidget for the calculator screen
 class CalculatorScreen extends StatefulWidget {
   const CalculatorScreen({super.key});
 
   @override
-  _CalculatorScreenState createState() => _CalculatorScreenState();
+  CalculatorScreenState createState() => CalculatorScreenState();
 }
 
-class _CalculatorScreenState extends State<CalculatorScreen> {
+/// Public State class (was private before) for CalculatorScreen
+class CalculatorScreenState extends State<CalculatorScreen> {
   final TextEditingController _controller1 = TextEditingController();
   final TextEditingController _controller2 = TextEditingController();
 
   String _result = '';
 
+  /// Parse text input to double, fallback to 0 if invalid
   double _parse(String text) => double.tryParse(text) ?? 0;
 
+  /// Calls the appropriate Rust function based on the operation symbol
   void _calculate(String op) {
     final a = _parse(_controller1.text);
     final b = _parse(_controller2.text);
@@ -62,25 +68,36 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Rust Calculator')),
+      appBar: AppBar(title: const Text('Rust Calculator')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(controller: _controller1, decoration: InputDecoration(labelText: 'First number'), keyboardType: TextInputType.number),
-            TextField(controller: _controller2, decoration: InputDecoration(labelText: 'Second number'), keyboardType: TextInputType.number),
-            SizedBox(height: 16),
+            TextField(
+              controller: _controller1,
+              decoration: const InputDecoration(labelText: 'First number'),
+              keyboardType: TextInputType.number,
+            ),
+            TextField(
+              controller: _controller2,
+              decoration: const InputDecoration(labelText: 'Second number'),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: ['+', '-', '*', '/'].map((op) {
                 return ElevatedButton(
                   onPressed: () => _calculate(op),
-                  child: Text(op, style: TextStyle(fontSize: 20)),
+                  child: Text(op, style: const TextStyle(fontSize: 20)),
                 );
               }).toList(),
             ),
-            SizedBox(height: 24),
-            Text('Result: $_result', style: TextStyle(fontSize: 24)),
+            const SizedBox(height: 24),
+            Text(
+              'Result: $_result',
+              style: const TextStyle(fontSize: 24),
+            ),
           ],
         ),
       ),
