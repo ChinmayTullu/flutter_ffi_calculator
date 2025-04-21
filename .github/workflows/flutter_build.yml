@@ -35,6 +35,7 @@ jobs:
       - name: Build Rust FFI (Android .so)
         run: |
           cd rust
+          cd calculator
           cargo ndk -t arm64-v8a -o ../android/app/src/main/jniLibs build --release
 
       - name: Get Flutter dependencies
