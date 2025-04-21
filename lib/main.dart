@@ -6,6 +6,8 @@ void main() {
 }
 
 class CalculatorApp extends StatelessWidget {
+  const CalculatorApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
