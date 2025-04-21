@@ -1,14 +1,23 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+#[unsafe(no_mangle)]
+pub extern "C" fn add(a: f64, b: f64) -> f64 {
+    a + b
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+#[unsafe(no_mangle)]
+pub extern "C" fn subtract(a: f64, b: f64) -> f64 {
+    a - b
+}
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+#[unsafe(no_mangle)]
+pub extern "C" fn multiply(a: f64, b: f64) -> f64 {
+    a * b
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn divide(a: f64, b: f64) -> f64 {
+    if b == 0.0 {
+        f64::NAN
+    } else {
+        a / b
     }
 }
