@@ -1,8 +1,6 @@
 import 'dart:ffi';
 import 'dart:io';
 
-import 'package:ffi/ffi.dart';
-
 final DynamicLibrary nativeLib = Platform.isAndroid
     ? DynamicLibrary.open("libcalculator.so")
     : throw UnsupportedError("Only Android is supported");
